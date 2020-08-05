@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_height">300dp</dimen>
+    <dimen name="movie_title_text">20sp</dimen>
+    <dimen name="movie_secondary_text">18sp</dimen>
+    <dimen name="movie_normal_text">16sp</dimen>
+    <dimen name="image_height">150dp</dimen>
+</resources>
