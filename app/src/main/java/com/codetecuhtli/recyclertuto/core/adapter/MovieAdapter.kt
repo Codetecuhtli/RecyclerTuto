@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codetecuhtli.recyclertuto.R
 import com.codetecuhtli.recyclertuto.core.loadImage
 import com.codetecuhtli.recyclertuto.model.Movie
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.android.synthetic.main.card_movie.view.*
+import javax.inject.Inject
 
-class MovieAdapter(private val context: Context,
-                   private val onClick: (movie: Movie) -> Unit): RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
+class MovieAdapter @Inject constructor(@ApplicationContext private val context: Context):
+    RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
 
     var movies: MutableList<Movie> = mutableListOf()
     set(value) {
@@ -19,6 +21,12 @@ class MovieAdapter(private val context: Context,
             it.clear()
             it.addAll(value)
         }
+        notifyDataSetChanged()
+    }
+
+    var onClick: ((movie: Movie) -> Unit)? = null
+    set(value) {
+        field = value
         notifyDataSetChanged()
     }
 
@@ -35,10 +43,12 @@ class MovieAdapter(private val context: Context,
     }
 
     inner class MovieHolder(private val view: View,
-                            private val onClick: (movie: Movie) -> Unit): RecyclerView.ViewHolder(view){
+                            private val onClick: ((movie: Movie) -> Unit)?): RecyclerView.ViewHolder(view){
 
         fun bind(movie: Movie){
-            view.setOnClickListener { onClick(movie) }
+            onClick?.let {
+                view.setOnClickListener { it(movie) }
+            }
             view.movieTitle.text = movie.title
             view.movieDate.text = movie.releaseDate
             view.movieAverage.text = "${movie.voteAverage}"

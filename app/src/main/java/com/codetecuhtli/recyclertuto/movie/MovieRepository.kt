@@ -6,8 +6,9 @@ import com.codetecuhtli.recyclertuto.movie.model.*
 import com.codetecuhtli.recyclertuto.network.MovieApi
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
+import javax.inject.Inject
 
-class MovieRepository(private val movieApi: MovieApi) {
+class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
 
     fun getMovies(): LiveData<MovieResult> = liveData(Dispatchers.IO) {
 

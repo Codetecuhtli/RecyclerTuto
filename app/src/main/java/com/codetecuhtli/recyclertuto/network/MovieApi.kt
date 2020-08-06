@@ -43,7 +43,7 @@ interface MovieApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
-                .baseUrl("https://174f8707f1a0.ngrok.io/") //No es la mejor forma de hacerlo
+                .baseUrl("https://9075f3103ac5.ngrok.io/") //No es la mejor forma de hacerlo
                 .build()
 
             return retrofit.create(MovieApi::class.java)

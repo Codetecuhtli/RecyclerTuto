@@ -7,22 +7,20 @@ import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.codetecuhtli.recyclertuto.R
 import com.codetecuhtli.recyclertuto.core.adapter.MovieAdapter
-import com.codetecuhtli.recyclertuto.movie.MovieRepository
 import com.codetecuhtli.recyclertuto.movie.MovieViewModel
-import com.codetecuhtli.recyclertuto.movie.MovieViewModelFactory
 import com.codetecuhtli.recyclertuto.movie.model.Loading
 import com.codetecuhtli.recyclertuto.movie.model.MoviesError
 import com.codetecuhtli.recyclertuto.movie.model.MoviesSuccess
-import com.codetecuhtli.recyclertuto.network.MovieApi
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val movieViewModel: MovieViewModel by viewModels {
-        MovieViewModelFactory(MovieRepository(MovieApi.instance))
-    }
+    private val movieViewModel: MovieViewModel by viewModels()
 
-    private lateinit var movieAdapter:  MovieAdapter
+    @Inject lateinit var movieAdapter:  MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        initInstances()
         initView()
         initObservables()
     }
@@ -43,15 +40,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initInstances(){
-
-        movieAdapter = MovieAdapter(applicationContext) {
+    private fun initObservables(){
+        movieAdapter.onClick = {
             Log.i(MainActivity::class.java.simpleName, "$it")
         }
 
-    }
-
-    private fun initObservables(){
         movieViewModel.movies.observe(this) {
             when(it){
                 is Loading -> {

@@ -1,12 +1,12 @@
 package com.codetecuhtli.recyclertuto.movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.codetecuhtli.recyclertuto.movie.model.MovieResult
 
-class MovieViewModel(private val repository: MovieRepository): ViewModel() {
+class MovieViewModel @ViewModelInject constructor(
+    private val repository: MovieRepository
+): ViewModel() {
 
     private val movieIdInput = MutableLiveData<Int>()
 
